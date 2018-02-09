@@ -1,0 +1,15 @@
+lang: nodejs
+before_script:
+  - npm install
+  - npm install -g gulp-cli
+script:
+  - gulp zip
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: YADo39ub/i8/tfOm0NUe6RyXDj0HRGF+SJN5/eEyMUsQ8H5Qisa+fMkKLfZ5n4hiMMUY8XUpuDCc6HNbrVL8L31W+mxmtk1m1iCIp33Z/txUU1oyRpgS6KYUdvyV1aZ1r+1kMrEbaPUDEfhM36B4mF/CcNZ9d8tBoxnz2hULyhBiwjJqevuVHyxc+RFMfitug6BRglRVDBSly6z5eA6llwJ9jkTL+6K5Z6zNeWHaA4XPA3sr2NDFPHqZ64lEo97uTMlyDh5xb13he0/dnWlYhN1lvZCi01BegWieGjdfKCHW25BcZ04ffyBHaSThNAfpwASR9og7e05r8llqzf2hhQt5o4C5O5RQleOvOyRQgTssnuvfcsibPhf5kDAUVBjQca2yBSjMvhIvbUgjKhenreAIAD/CGvwYQqitSEBBhU50Uts93qSXnN3xDcfczjoU8uM0ktgbKYHDFeMYPx/XaL8gHb4B6SAKKVDNHHYDFpQO7QIqlIbEhhd4SM45rV4heBkNJha0Gc35iMn9HoKK9maPdlbCWCyGYSsoB5oquJlJGaT+vOH2goEGCjhdlP2XJMua9OhQjZugsT+5lD4+Jpa/g+73/FKbX9ize/Zzfc+7SBPw3mft53MR2qJLT1ryXV4x/phAjKwNjRb8Aw2VjNH6xl/tiCYFUdiLoc9JOuY=
+  file: dist/devenney.zip
+  on:
+    repo: devenney/ghost-theme
+    tags: true

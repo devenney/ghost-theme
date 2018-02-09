@@ -1,0 +1,40 @@
+<a href="{{url}}">
+  <div class="card article">
+    {{#if feature_image}}
+      {{!-- TODO 
+        url({{feature_image}})
+      --}}
+    {{/if}}
+
+    <div class="card-content">
+      {{#if primary_tag}}
+        <span class="tag is-primary">{{primary_tag.name}}</span>
+      {{/if}}
+      <p class="subtitle">
+        {{title}}
+      </p>
+      <p>
+        {{excerpt words="33"}} ...
+      </p>
+    </div>
+
+    <br />
+    </div>
+    <div class="card is-pulled-right">
+    <div class="card article">
+      <div class="media">
+        {{#if author.profile_image}}
+          <div class="media-left">
+            <figure class="image is-48x48">
+              <img src="{{author.profile_image}}" alt="{{author.name}}" />
+            </figure>
+          </div>
+        {{/if}}
+        <div class="media-content" style="overflow: visible;">
+          <p class="title is-5">{{author}}</p>
+          <p class="subtitle is-6">{{date format="D MMMM YYYY"}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,5 @@
+<div class="navbar-start">
+    {{#foreach navigation}}
+     <a class="navbar-item {{#if current}} is-primary{{/if}}" href="{{url absolute="true"}}">{{label}}</a>
+    {{/foreach}}
+</ul>

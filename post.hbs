@@ -1,0 +1,143 @@
+{{!< default}}
+
+{{!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template --}}
+
+{{> "site-nav"}}
+
+{{!-- Everything inside the #post tags pulls data from the post --}}
+{{#post}}
+  <section class="section">
+    <div class="container">
+      <section class="container">
+        <div class="card">
+          <div class="card-content">
+            <div class="media">
+              {{#if feature_image}}
+                <div class="media-center">
+                  <img src="url({{feature_image}})">
+                </div>
+              {{/if}}
+              <div class="media-content has-text-centered" style="overflow: visible;">
+                <h1 class="title">{{title}}</h1>
+                <h2 class="subtitle is-4">{{date format="D MMMM YYYY"}}</h2>
+              </div>
+            </div>
+
+            <hr /><br />
+
+            <div class="content">
+              {{content}}
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            {{#author}}
+              <div class="media has-text-right">
+                {{#if profile_image}}
+                  <div class="media-left">
+                    <figure class="image is-48x48">
+                      <img src="{{profile_image}}" alt="{{name}}" />
+                    </figure>
+                  </div>
+                {{/if}}
+                <div class="media-content">
+                  <a class="title is-4" href="{{url}}">{{name}}</a>
+                  <p>
+                    {{#if bio}}
+                      {{bio}}
+                    {{else}}
+                      Read <a href="{{url}}">more posts</a> by this author.
+                    {{/if}}
+                  </p>
+
+                  <p class="has-text-right">
+                    <a href="{{url}}">Read More</a>
+                  </p>
+                </div>
+              </div> 
+            {{/author}}
+          </div>
+        </div>
+
+        {{!-- Email subscribe form at the bottom of the page --}}
+        {{#if @labs.subscribers}}
+          <h3 class="subtitle">Subscribe to {{@blog.title}}</h3>
+          <p>Get the latest posts delivered right to your inbox</p>
+          {{subscribe_form placeholder="youremail@example.com"}}
+        {{/if}}
+
+      </section>
+    </div>
+  </section>
+
+{{!-- TODO BELOW HERE --}
+            {{!--
+
+            If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id.
+
+            <section class="post-full-comments">
+                <div id="disqus_thread"></div>
+                <script>
+                    var disqus_config = function () {
+                        this.page.url = '{{url absolute="true"}}';
+                        this.page.identifier = 'ghost-{{comment_id}}';
+                    };
+                    (function() {
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://test-apkdzgmqhj.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+            </section>
+            --}}
+
+{{!-- Links to Previous/Next posts --}}
+  <section class="section">
+  <div class="container">
+    {{#if primary_tag}}
+    {{#get "posts" filter="tags:{{primary_tag.slug}}+id:-{{id}}" limit="3" as |related_posts|}}
+      {{#if related_posts}}
+        <h1 class="title">Related Posts in <span class="tag is-primary">{{../primary_tag.name}}</span></h1>
+        <div class="columns">
+        {{#foreach related_posts}}
+          <div class="column is-4">
+          <div class="card">
+            <div class="card-content has-text-centered">
+              <h1 class="subtitle"><a href="{{url}}">{{title}}</a></h1>
+              <h2 class="subtitle is-6">{{date}}</h2>
+            </div>
+          </div>
+          </div>
+        {{/foreach}}
+      {{/if}}
+    {{/get}}
+    {{/if}}
+  </div>
+  </section>
+
+  <section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-6">
+        {{#prev_post}}
+          <h1 class="title">Previous Post</h1>
+          {{> "post-card"}}
+        {{/prev_post}}
+      </div>
+      <div class="column is-6">
+        {{#next_post}}
+          <h1 class="title">Next Post</h1>
+          {{> "post-card"}}
+        {{/next_post}}
+      </div>
+    </div>
+  </div>
+  </section>
+      
+{{/post}}
