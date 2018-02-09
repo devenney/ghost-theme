@@ -25,8 +25,29 @@ var nodemonServerInit = function () {
     livereload.listen(1234);
 };
 
-gulp.task('build', ['css'], function (/* cb */) {
+gulp.task('build', ['css', 'hbs', 'js', 'partials'], function (/* cb */) {
     return nodemonServerInit();
+});
+
+gulp.task('partials', function () {
+  return gulp.src('src/partials/**')
+    .on('error', swallowError)
+    .pipe(gulp.dest('dist/partials/'))
+    .pipe(livereload());
+});
+
+gulp.task('hbs', function () {
+  return gulp.src('src/*.hbs')
+    .on('error', swallowError)
+    .pipe(gulp.dest('dist/'))
+    .pipe(livereload());
+});
+
+gulp.task('js', function () {
+  return gulp.src('src/js/*.js')
+    .on('error', swallowError)
+    .pipe(gulp.dest('dist/assets/js/'))
+    .pipe(livereload());
 });
 
 gulp.task('css', function () {
@@ -38,28 +59,26 @@ gulp.task('css', function () {
         cssnano()
     ];
 
-    return gulp.src('assets/css/*.css')
+    return gulp.src('src/css/*.css')
         .on('error', swallowError)
         .pipe(sourcemaps.init())
         .pipe(postcss(processors))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('assets/built/'))
+        .pipe(gulp.dest('dist/assets/css/'))
         .pipe(livereload());
 });
 
 gulp.task('watch', function () {
-    gulp.watch('assets/css/**', ['css']);
+    gulp.watch('src/css/**', ['css']);
 });
 
-gulp.task('zip', ['css'], function() {
-    var targetDir = 'dist/';
+gulp.task('zip', ['css', 'hbs', 'js', 'partials'], function() {
+    var targetDir = 'release/';
     var themeName = require('./package.json').name;
     var filename = themeName + '.zip';
 
     return gulp.src([
-        '**',
-        '!node_modules', '!node_modules/**',
-        '!dist', '!dist/**'
+        'dist/**',
     ])
         .pipe(zip(filename))
         .pipe(gulp.dest(targetDir));
